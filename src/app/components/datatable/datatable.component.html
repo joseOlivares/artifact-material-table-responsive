@@ -1,0 +1,179 @@
+<div class="datatable">
+  <!-- DataTable Header / Actions -->
+  <div class="datatable__header">
+    <div
+      *ngIf="!dataTableConfig?.headerActions?.search?.hidden"
+      class="datatable__header__search"
+    >
+      <mat-form-field>
+        <mat-icon matPrefix>search</mat-icon>
+        <input
+          matInput
+          (keyup)="applyFilter($event)"
+          [placeholder]="dataTableConfig?.headerActions?.search?.placeholder!"
+        />
+      </mat-form-field>
+    </div>
+    <div class="datatable__header__actions">
+      <button
+        *ngIf="!dataTableConfig?.headerActions?.download?.hidden"
+        mat-raised-button
+        color="warn"
+      >
+        <mat-icon>file_download</mat-icon>
+      </button>
+      <ng-container
+        *ngFor="
+          let action of dataTableConfig?.headerActions?.actions;
+          trackBy: trackByEvents
+        "
+      >
+        <ng-container
+          [ngTemplateOutlet]="
+            action?.renderComponent ? componentAction : buttonAction
+          "
+          [ngTemplateOutletContext]="{ $implicit: action }"
+        >
+        </ng-container>
+      </ng-container>
+      <ng-template #buttonAction let-action>
+        <button
+          mat-raised-button
+          [color]="action?.color"
+          [ngStyle]="action?.style && action?.style()"
+          [ngClass]="{
+            fullWidth: action?.mobile?.fullWidth
+          }"
+          (click)="action?.onClick()"
+        >
+          <mat-icon *ngIf="action?.icon">{{ action?.icon }}</mat-icon>
+          {{ action?.title }}
+        </button>
+      </ng-template>
+      <ng-template #componentAction let-action>
+        <ng-container
+          [ngComponentOutlet]="action?.renderComponent?.component"
+        ></ng-container>
+      </ng-template>
+    </div>
+  </div>
+
+  <!-- DataTable -->
+  <div
+    class="datatable__body"
+    [class.fullWidth]="dataTableConfig?.table?.fullWidth"
+  >
+    <table mat-table [dataSource]="dataSource" matSort>
+      <ng-container
+        *ngFor="let column of dataTableConfig?.columns; trackBy: trackByEvents"
+        [matColumnDef]="column.field"
+      >
+        <th mat-header-cell mat-sort-header *matHeaderCellDef>
+          {{ column?.title }}
+        </th>
+        <td
+          mat-cell
+          *matCellDef="let element"
+          [ngClass]="{
+            hidden: column?.mobile?.hidden,
+            fullrow: column?.mobile?.fullrow,
+            title: column?.mobile?.order === 1
+          }"
+          [ngStyle]="
+            column?.cellStyle &&
+            column?.cellStyle(element, element[column.field])
+          "
+          [style.order]="column?.mobile?.order"
+          [attr.data-label]="column?.mobile?.dataLabel"
+        >
+          <ng-container *ngIf="!column?.renderComponent; else renderComponent">
+            {{
+              column?.format
+                ? column?.format(element, element[column.field])
+                : element[column.field]
+            }}
+          </ng-container>
+          <ng-template #renderComponent>HOLA
+            <ng-container
+              [ngComponentOutlet]="column?.renderComponent?.component"
+              [ndcDynamicInputs]="
+                column?.renderComponent?.inputs &&
+                column?.renderComponent?.inputs(element)
+              "
+              [ndcDynamicOutputs]="
+                column?.renderComponent?.outputs &&
+                column?.renderComponent?.outputs(element)
+              "
+            ></ng-container>
+          </ng-template>
+        </td>
+      </ng-container>
+
+      <!-- actions per row -->
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef>
+          <ng-container *ngIf="dataTableConfig?.actions?.title?.hidden">{{
+            dataTableConfig?.actions?.title?.text
+          }}</ng-container>
+        </th>
+        <td mat-cell *matCellDef="let element">
+          <ng-container
+            [ngTemplateOutlet]="
+              dataTableConfig?.actions?.verticalMenu?.hidden
+                ? verticalMenu
+                : horizontalMenu
+            "
+            [ngTemplateOutletContext]="{element}"
+          >
+          </ng-container>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    </table>
+  </div>
+  <!-- DataTable / Paginador -->
+  <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons>
+  </mat-paginator>
+</div>
+
+<!-- DataTable / Menu horizontal -->
+<ng-template #horizontalMenu let-element="element">
+  <button
+    mat-icon-button
+    *ngFor="
+      let action of dataTableConfig?.actions?.events;
+      trackBy: trackByEvents
+    "
+    [disabled]="action?.disabled(element)"
+    (click)="action?.onClick(element)"
+    [ngClass]="{
+      justifyEnd: action?.justifyEnd
+    }"
+    [matTooltip]="action.title"
+  >
+    <mat-icon>{{ action?.icon }}</mat-icon>
+  </button>
+</ng-template>
+
+<!-- DataTable / Menu vertical -->
+<ng-template #verticalMenu let-element="element">
+  <button mat-button [matMenuTriggerFor]="menu">
+    <mat-icon>{{ dataTableConfig?.actions?.verticalMenu?.icon }}</mat-icon>
+  </button>
+  <mat-menu #menu="matMenu">
+    <button
+      mat-menu-item
+      *ngFor="
+        let action of dataTableConfig?.actions?.events;
+        trackBy: trackByEvents
+      "
+      [disabled]="action?.disabled(element)"
+      (click)="action?.onClick(element)"
+    >
+      <mat-icon>{{ action?.icon }}</mat-icon>
+      {{ action?.title }}
+    </button>
+  </mat-menu>
+</ng-template>
