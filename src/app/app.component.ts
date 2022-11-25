@@ -109,6 +109,7 @@ export class AppComponent implements OnInit {
             icon: 'add',
             color: 'primary',
             title: 'Acción 1',
+            mobile: { fullWidth: true },
             // style: () => ({ width: '200px' }),
             onClick: () => {
               console.log('click!');
