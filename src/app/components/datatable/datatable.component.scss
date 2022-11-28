@@ -1,43 +1,14 @@
-$light-gray:#F6F8FA;
+$light-gray:#e5eaf0;
 $black-inactive: rgba(0, 0, 0, 0.54);
 
 .datatable {
-  &__header {
+  &__input-search{
     width: 100%;
-    min-height: 64px;
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: space-between;
-    padding: 8px 40px;
-    border-bottom: 1px solid #e5e5e5;
-    row-gap: 8px;
-    column-gap: 20px;
-
-    &__search {
-      width: 100%;
-      max-width: 350px;
-
-      .mat-form-field{
-        width: 100%;
-      }
-    }
-
-    &__actions {
-      display: flex;
-      row-gap: 8px;
-      column-gap: 20px;
-      flex-wrap: wrap;
-      justify-content: flex-end;
-      align-items: center;
-    }
   }
 
   &__body {
     width: 100%;
     overflow-x: auto;
-    padding: 0 40px;
-
 
     &.fullWidth {
       width: 100%;
@@ -143,23 +114,9 @@ $black-inactive: rgba(0, 0, 0, 0.54);
 
 @media screen and (max-width: 768px) {
   .datatable {
-    &__header {
-      padding: 8px 16px;
-      height: 100%;
 
-      &__search {
-        width: 100%;
-      }
-
-      &__actions {
-        width: 100%;
-        padding: 8px 16px;
-        justify-content: flex-end;
-
-        button.fullWidth {
-          width: 100%;
-        }
-      }
+    &__actions{
+      margin-bottom: 10px;;
     }
 
     &__body {

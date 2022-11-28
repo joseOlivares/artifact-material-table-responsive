@@ -1,5 +1,6 @@
 <div class="datatable">
   <!-- DataTable Header / Actions -->
+  <!--
   <div class="datatable__header">
     <div
       *ngIf="!dataTableConfig?.headerActions?.search?.hidden"
@@ -57,6 +58,56 @@
       </ng-template>
     </div>
   </div>
+  -->
+
+  <div class="row">
+    <div *ngIf="!dataTableConfig?.headerActions?.search?.hidden"
+     class="col-12 col-md-6">
+      <mat-form-field class="datatable__input-search">
+        <mat-icon matPrefix>search</mat-icon>
+        <input
+          matInput
+          (keyup)="applyFilter($event)"
+          [placeholder]="dataTableConfig?.headerActions?.search?.placeholder!"
+        />
+      </mat-form-field>
+    </div>
+    <div class="col-12 col-md-6 pt-2 datatable__actions">
+      <button *ngIf="!dataTableConfig?.headerActions?.download?.hidden"
+        mat-raised-button  color="warn" class="m-1">
+          <mat-icon>file_download</mat-icon>
+      </button>
+      <ng-container
+        *ngFor="let action of dataTableConfig?.headerActions?.actions;
+          trackBy: trackByEvents">
+        <ng-container
+          [ngTemplateOutlet]="action?.renderComponent ? componentAction : buttonAction"
+          [ngTemplateOutletContext]="{ $implicit: action }">
+        </ng-container>
+      </ng-container>
+      <ng-template #buttonAction let-action>
+        <button
+          mat-raised-button
+          [color]="action?.color"
+          [ngStyle]="action?.style && action?.style()"
+          [ngClass]="{
+            fullWidth: action?.mobile?.fullWidth
+          }" class="m-1"
+          (click)="action?.onClick()"
+        >
+          <mat-icon *ngIf="action?.icon">{{ action?.icon }}</mat-icon>
+          {{ action?.title }}
+        </button>
+      </ng-template>
+      <ng-template #componentAction let-action>
+        <ng-container
+          [ngComponentOutlet]="action?.renderComponent?.component"
+        ></ng-container>
+      </ng-template>
+    </div>
+  </div>
+
+
 
   <!-- DataTable -->
   <div
