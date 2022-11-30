@@ -19,6 +19,7 @@ export class AppComponent implements OnInit {
   }
 
   //Esta es la data que vamos a renderizar
+  //Propiedad mobile:{hidden:true}  define si la columna se va a mostrar en mobile
   getDataTable(): DataTable {
     return {
       table: { fullWidth: false },
@@ -58,7 +59,9 @@ export class AppComponent implements OnInit {
           title: 'Monto',
           field: 'monto',
           mobile: { hidden: false, order: 3 },
-          cellStyle: (row: any) => ({ color: '#008035' }),
+          cellStyle: (row: any) => ({
+            color: row?.monto<0 ? 'red':'#008035' //Mostrando los saldos negativos en diferente color
+           }),
           format: (row: any, value: any) => {
             return this.currencyPipe.transform(
               value,
