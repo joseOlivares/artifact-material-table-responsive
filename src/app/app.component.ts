@@ -115,7 +115,7 @@ export class AppComponent implements OnInit {
             mobile: { fullWidth: true },
             // style: () => ({ width: '200px' }),
             onClick: () => {
-              console.log('click!');
+              console.log('Action1 click!');
             },
           },
           {
@@ -124,7 +124,7 @@ export class AppComponent implements OnInit {
             title: 'Acción 2',
             mobile: { fullWidth: true },
             onClick: () => {
-              console.log('click!');
+              console.log('Action2 click!');
             },
           },
         ],
