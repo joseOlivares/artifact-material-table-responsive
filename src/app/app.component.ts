@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import {DUMMY_DATA} from './services/mock-data';
-import { DataTable } from './interfaces/datatable.interface';
-import { TextComponent } from './components/text/text.component';
+import {DUMMY_DATA} from './services/mock-data'; //Nuestra data de prueba
+import { DataTable } from './interfaces/datatable.interface';//Interfaces que utiliza el datatable
+import { TextComponent } from './components/text/text.component'; //componente adicional
 import { CurrencyPipe } from '@angular/common';
 @Component({
   selector: 'app-root',
@@ -19,7 +19,7 @@ export class AppComponent implements OnInit {
   }
 
   //Esta es la data que vamos a renderizar
-  //Propiedad mobile:{hidden:true}  define si la columna se va a mostrar en mobile
+  //Propiedad mobile:{hidden:true}  define si la columna se va a ocultar en modo mobile <768px
   getDataTable(): DataTable {
     return {
       table: { fullWidth: false },
@@ -28,7 +28,7 @@ export class AppComponent implements OnInit {
           title: 'Línea',
           field: 'linea',
           mobile: { hidden: true },
-          //Si habilitamos este bloque, podemos renderizar un componente
+          //Si habilitamos este bloque, podemos renderizar un componente externo
           renderComponent: {
             component: TextComponent,
             inputs: (rowData: any) => ({
@@ -37,7 +37,7 @@ export class AppComponent implements OnInit {
             outputs: (rowData: any) => ({
               onClick: (text: any) => alert(`Click en linea ${text}`),
             }),
-          },/**/
+          },
         },
         {
           title: 'Cuenta',

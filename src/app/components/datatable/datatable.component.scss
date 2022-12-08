@@ -1,6 +1,8 @@
+/*Definiendo algunos colores */
 $light-gray:#e5eaf0;
 $black-inactive: rgba(0, 0, 0, 0.54);
 
+/* Estilos */
 .datatable {
   &__input-search{
     width: 100%;
@@ -188,7 +190,6 @@ $black-inactive: rgba(0, 0, 0, 0.54);
         tr.mat-row td.mat-column-actions {
           order: 6;   /*coloca las acciones al final*/
           grid-column: col/span 2; /* permite centrar */
-          /*display: flex;*/
 
           button.justifyEnd {
             margin-left: auto;
