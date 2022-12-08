@@ -9,11 +9,12 @@ import { CurrencyPipe } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DynamicIoModule } from 'ng-dynamic-component';
 import { DatatableComponent } from './components/datatable/datatable.component'; //para input/output en templates
-
+import { TextComponent } from './components/text/text.component'; //Componente llamado dentro del adtatable
 @NgModule({
   declarations: [
     AppComponent,
-    DatatableComponent
+    DatatableComponent,
+    TextComponent,
   ],
   imports: [
     BrowserModule,

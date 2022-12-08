@@ -28,15 +28,16 @@ export class AppComponent implements OnInit {
           title: 'Línea',
           field: 'linea',
           mobile: { hidden: true },
+          //Si habilitamos este bloque, podemos renderizar un componente
           renderComponent: {
             component: TextComponent,
             inputs: (rowData: any) => ({
-              text: rowData?.beneficiario,
+              text: rowData?.linea,
             }),
             outputs: (rowData: any) => ({
-              onClick: (text: any) => console.log(text),
+              onClick: (text: any) => alert(`Click en linea ${text}`),
             }),
-          },
+          },/**/
         },
         {
           title: 'Cuenta',

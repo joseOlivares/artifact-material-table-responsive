@@ -11,6 +11,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { DataTable } from '../../interfaces/datatable.interface';
 import { MatPaginatorTranslate } from './paginator-translate';
 
+
 @Component({
   selector: 'app-datatable',
   templateUrl: './datatable.component.html',
